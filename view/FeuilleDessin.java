@@ -1,18 +1,19 @@
 package view;
 
-
-import java.awt.*;
-import javax.swing.*;
+// package logo;
 
 import model.TortueModel;
 
-import java.awt.event.*;
-import java.util.*;
-import java.io.*;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Titre :        Logo
- * Description :  Un exemple de programme graphique utilisant la celebre Tortue Logo
+ * Description :  Un exemple de programme graphique utilisant la celebre TortueModelModel Logo
  * Copyright :    Copyright (c) 2000
  * Societe :      LIRMM
  * @author J. Ferber
@@ -20,18 +21,18 @@ import java.io.*;
  */
 
 public class FeuilleDessin extends JPanel {
-	private ArrayList<TortueModel> tortues; // la liste des tortues enregistrees
+	private ArrayList<TortueModel> TortueModels; // la liste des TortueModels enregistrees
 	
 	public FeuilleDessin() {
-		tortues = new ArrayList<TortueModel>();
+		TortueModels = new ArrayList<TortueModel>();
 	}
 
-	public void addTortue(TortueModel o) {
-		tortues.add(o);
+	public void addTortueModel(TortueModel o) {
+		TortueModels.add(o);
 	}
 
 	public void reset() {
-		for (Iterator it = tortues.iterator();it.hasNext();) {
+		for (Iterator it = TortueModels.iterator();it.hasNext();) {
 			TortueModel t = (TortueModel) it.next();
 			t.reset();
 		}
@@ -51,9 +52,10 @@ public class FeuilleDessin extends JPanel {
 	}
 	
 	public void showTurtles(Graphics g) {
-		for(Iterator it = tortues.iterator();it.hasNext();) {
+		for(Iterator it = TortueModels.iterator();it.hasNext();) {
 			TortueModel t = (TortueModel) it.next();
 			t.drawTurtle(g);
 		}
 	}
+
 }

@@ -1,17 +1,16 @@
 package view;
 
 
-
-import java.awt.*;
-
-import javax.swing.*;
+// package logo;
 
 import controller.Controller;
 import model.TortueModel;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
-import java.io.*;
+import java.util.Observable;
+import java.util.Observer;
 
 
 /*************************************************************************
@@ -29,15 +28,14 @@ import java.io.*;
 **************************************************************************/
 
 
-public class SimpleLogo extends JFrame implements ActionListener {
+public class SimpleLogo extends JFrame implements Observer {
 	public static final Dimension VGAP = new Dimension(1,5);
 	public static final Dimension HGAP = new Dimension(5,1);
 
 	private FeuilleDessin feuille;
 	private TortueModel courante;
 	private JTextField inputValue;
-	
-	private Controller controller;
+	private Controller c;
 
 
 	/**
@@ -51,9 +49,9 @@ public class SimpleLogo extends JFrame implements ActionListener {
 					fenetre.setVisible(true);
 				}
 			});
-			
+
 		}
-	
+
 	private void quitter() {
 		System.exit(0);
 	}
@@ -61,7 +59,7 @@ public class SimpleLogo extends JFrame implements ActionListener {
 	public SimpleLogo() {
 		super("un logo tout simple");
 		logoInit();
-		
+
 		addWindowListener(new WindowAdapter() {
 		    @Override
 		    public void windowClosing(WindowEvent arg0) {
@@ -74,6 +72,27 @@ public class SimpleLogo extends JFrame implements ActionListener {
 	public void logoInit() {
 		getContentPane().setLayout(new BorderLayout(10,10));
 
+		feuille = new FeuilleDessin(); //500, 400);
+		feuille.setBackground(Color.white);
+		feuille.setSize(new Dimension(600,400));
+		feuille.setPreferredSize(new Dimension(600,400));
+
+		getContentPane().add(feuille,"Center");
+
+		// Creation de la TortueModel
+		TortueModel TortueModel = new TortueModel();
+
+		// Deplacement de la TortueModel au centre de la feuille
+		TortueModel.setPosition(500/2, 400/2);
+
+		courante = TortueModel;
+		courante.addObserver(this);
+		feuille.addTortueModel(TortueModel);
+
+		// Création du controller
+		System.out.println("test1");
+		this.c = new Controller(courante,this);
+
 		// Boutons
 		JToolBar toolBar = new JToolBar();
 		JPanel buttonPanel = new JPanel();
@@ -82,7 +101,7 @@ public class SimpleLogo extends JFrame implements ActionListener {
 		getContentPane().add(buttonPanel,"North");
 
 		addButton(toolBar,"Effacer","Nouveau dessin","/icons/index.png");
-		
+
 		toolBar.add(Box.createRigidArea(HGAP));
 		inputValue=new JTextField("45",5);
 		toolBar.add(inputValue);
@@ -136,36 +155,23 @@ public class SimpleLogo extends JFrame implements ActionListener {
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+
+
 		// les boutons du bas
 		JPanel p2 = new JPanel(new GridLayout());
 		JButton b20 = new JButton("Proc1");
 		p2.add(b20);
-		b20.addActionListener(this);
+		b20.addActionListener(c);
 		JButton b21 = new JButton("Proc2");
 		p2.add(b21);
-		b21.addActionListener(this);
+		b21.addActionListener(c);
 		JButton b22 = new JButton("Proc3");
 		p2.add(b22);
-		b22.addActionListener(this);
+		b22.addActionListener(c);
 
 		getContentPane().add(p2,"South");
 
-		feuille = new FeuilleDessin(); //500, 400);
-		feuille.setBackground(Color.white);
-		feuille.setSize(new Dimension(600,400));
-		feuille.setPreferredSize(new Dimension(600,400));
-			
-		getContentPane().add(feuille,"Center");
-		
-		// Creation de la tortue
-		TortueModel tortue = new TortueModel();
-		
-		// Deplacement de la tortue au centre de la feuille
-		tortue.setPosition(500/2, 400/2); 		
-		
-		courante = tortue;
-		feuille.addTortue(tortue);
-		this.controller = new Controller(courante);
+
 
 		pack();
 		setVisible(true);
@@ -174,22 +180,6 @@ public class SimpleLogo extends JFrame implements ActionListener {
 	public String getInputValue(){
 		String s = inputValue.getText();
 		return(s);
-	}
-
-	/** la gestion des actions des boutons */
-	public void actionPerformed(ActionEvent e)
-	{
-		String c = e.getActionCommand();
-
-		try {
-			int v = Integer.parseInt(inputValue.getText());
-			controller.actionPerformed(c,v);
-			
-		} catch (NumberFormatException ex){
-			System.err.println("ce n'est pas un nombre : " + inputValue.getText());
-		}
-
-		feuille.repaint();
 	}
 
   	/** les procedures Logo qui combine plusieurs commandes..*/
@@ -210,7 +200,7 @@ public class SimpleLogo extends JFrame implements ActionListener {
 		feuille.reset();
 		feuille.repaint();
 
-		// Replace la tortue au centre
+		// Replace la TortueModel au centre
 		Dimension size = feuille.getSize();
 		courante.setPosition(size.width/2, size.height/2);
 	}
@@ -235,7 +225,7 @@ public class SimpleLogo extends JFrame implements ActionListener {
 		b.setToolTipText(tooltiptext);
 		b.setBorder(BorderFactory.createRaisedBevelBorder());
 		b.setMargin(new Insets(0,0,0,0));
-		b.addActionListener(this);
+		b.addActionListener(c);
 	}
 
 	public void addMenuItem(JMenu m, String label, String command, int key) {
@@ -244,12 +234,18 @@ public class SimpleLogo extends JFrame implements ActionListener {
 		m.add(menuItem);
 
 		menuItem.setActionCommand(command);
-		menuItem.addActionListener(this);
+		menuItem.addActionListener(this.c);
 		if (key > 0) {
 			if (key != KeyEvent.VK_DELETE)
 				menuItem.setAccelerator(KeyStroke.getKeyStroke(key, Event.CTRL_MASK, false));
 			else
 				menuItem.setAccelerator(KeyStroke.getKeyStroke(key, 0, false));
 		}
+	}
+
+	@Override
+	public void update(Observable observable, Object o) {
+		System.out.println("trying to update");
+		feuille.repaint();
 	}
 }

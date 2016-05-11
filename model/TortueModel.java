@@ -1,11 +1,11 @@
 package model;
 
+// package logo;
 
 import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
-import java.util.*;
-import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Observable;
 
 
 /*************************************************************************
@@ -22,7 +22,7 @@ import java.io.*;
 **************************************************************************/
 
 
-public class TortueModel
+public class TortueModel extends Observable
 {
 
 	protected class Segment {
@@ -56,7 +56,7 @@ public class TortueModel
 	public void setColor(int n) {coul = n;}
 	public int getColor() {return coul;}
 
-	public TortueModel() { 
+	public TortueModel() {
 		listSegments = new ArrayList<Segment>();
 		reset();
 	}
@@ -68,7 +68,8 @@ public class TortueModel
 		coul = 0;
 		crayon = true;
 		listSegments.clear();
-  	}
+		this.notifyObservers();
+	}
 
 	public void setPosition(int newX, int newY) {
 		x = newX;
@@ -151,30 +152,37 @@ public class TortueModel
 
 		x = newX;
 		y = newY;
+		this.notifyObservers();
 	}
 
 	public void droite(int ang) {
 		dir = (dir + ang) % 360;
+		this.notifyObservers();
 	}
 
 	public void gauche(int ang) {
 		dir = (dir - ang) % 360;
+		this.notifyObservers();
 	}
 
 	public void baisserCrayon() {
 		crayon = true;
+		this.notifyObservers();
 	}
 
 	public void leverCrayon() {
 		crayon = false;
+		this.notifyObservers();
 	}
 
 	public void couleur(int n) {
 		coul = n % 12;
+		this.notifyObservers();
 	}
 
 	public void couleurSuivante() {
 	 	couleur(coul+1);
+		this.notifyObservers();
 	}
 
 	/** quelques classiques */
@@ -200,5 +208,11 @@ public class TortueModel
 			droite(360/a);
 			n = n+1;
 		}
+	}
+
+	public void notifyObservers(){
+		System.out.println("notified");
+		this.setChanged();
+		super.notifyObservers();
 	}
 }
