@@ -28,12 +28,12 @@ import java.util.Observer;
 **************************************************************************/
 
 
-public class SimpleLogo extends JFrame implements Observer {
+public class ModeManuel extends JFrame implements Observer {
 	public static final Dimension VGAP = new Dimension(1,5);
 	public static final Dimension HGAP = new Dimension(5,1);
 
-	private FeuilleDessin feuille;
 	private TortueModel courante;
+	private FeuilleDessin feuille;
 	private JTextField inputValue;
 	private Controller c;
 
@@ -45,18 +45,18 @@ public class SimpleLogo extends JFrame implements Observer {
 		   SwingUtilities.invokeLater(new Runnable(){
 				public void run(){
 
-					SimpleLogo fenetre = new SimpleLogo();
+					ModeManuel fenetre = new ModeManuel();
 					fenetre.setVisible(true);
 				}
 			});
 
 		}
 
-	private void quitter() {
+	public void quitter() {
 		System.exit(0);
 	}
 
-	public SimpleLogo() {
+	public ModeManuel() {
 		super("un logo tout simple");
 		logoInit();
 
@@ -88,9 +88,8 @@ public class SimpleLogo extends JFrame implements Observer {
 		courante = TortueModel;
 		courante.addObserver(this);
 		feuille.addTortueModel(TortueModel);
-
+		feuille.addTortueModel(TortueModel);
 		// Création du controller
-		System.out.println("test1");
 		this.c = new Controller(courante,this);
 
 		// Boutons
@@ -182,19 +181,6 @@ public class SimpleLogo extends JFrame implements Observer {
 		return(s);
 	}
 
-  	/** les procedures Logo qui combine plusieurs commandes..*/
-	public void proc1() {
-		courante.carre();
-	}
-
-	public void proc2() {
-		courante.poly(60,8);
-	}
-
-	public void proc3() {
-		courante.spiral(50,40,6);
-	}
-
 	// efface tout et reinitialise la feuille
 	public void effacer() {
 		feuille.reset();
@@ -202,6 +188,7 @@ public class SimpleLogo extends JFrame implements Observer {
 
 		// Replace la TortueModel au centre
 		Dimension size = feuille.getSize();
+		System.out.println(courante);
 		courante.setPosition(size.width/2, size.height/2);
 	}
 
@@ -245,7 +232,6 @@ public class SimpleLogo extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable observable, Object o) {
-		System.out.println("trying to update");
 		feuille.repaint();
 	}
 }

@@ -27,7 +27,7 @@
 //**************************************************************************/
 //
 //
-//public class SimpleLogo extends JFrame implements ActionListener {
+//public class ModeManuel extends JFrame implements ActionListener {
 //	public static final Dimension VGAP = new Dimension(1,5);
 //	public static final Dimension HGAP = new Dimension(5,1);
 //
@@ -43,7 +43,7 @@
 //		   SwingUtilities.invokeLater(new Runnable(){
 //				public void run(){
 //
-//					SimpleLogo fenetre = new SimpleLogo();
+//					ModeManuel fenetre = new ModeManuel();
 //					fenetre.setVisible(true);
 //				}
 //			});
@@ -54,7 +54,7 @@
 //		System.exit(0);
 //	}
 //
-//	public SimpleLogo() {
+//	public ModeManuel() {
 //		super("un logo tout simple");
 //		logoInit();
 //

@@ -1,7 +1,6 @@
 package controller;
 
-import view.SimpleLogo;
-import model.TortueModel;
+import view.ModeManuel;
 import model.TortueModel;
 
 import java.awt.event.ActionEvent;
@@ -12,9 +11,9 @@ import java.awt.event.ActionListener;
  */
 public class Controller implements ActionListener {
     private TortueModel model;
-    private SimpleLogo view;
+    private ModeManuel view;
 
-    public Controller(TortueModel model, SimpleLogo view) {
+    public Controller(TortueModel model, ModeManuel view) {
         this.model = model;
         this.view = view;
     }
@@ -29,13 +28,13 @@ public class Controller implements ActionListener {
                 System.out.println("command avancer");
                 try {
                     int v = Integer.parseInt(view.getInputValue());
-                    System.out.println("avancer :" + v);
                     model.avancer(v);
                 } catch (NumberFormatException ex){
                     System.err.println("ce n'est pas un nombre : " + view.getInputValue());
                 }
                 break;
             case "Droite" :
+                System.out.println("command droite");
                 try {
                     int v = Integer.parseInt(view.getInputValue());
                     model.droite(v);
@@ -44,6 +43,7 @@ public class Controller implements ActionListener {
                 }
                 break;
             case "Gauche" :
+                System.out.println("command gauche");
                 try {
                     int v = Integer.parseInt(view.getInputValue());
                     model.gauche(v);
@@ -52,22 +52,32 @@ public class Controller implements ActionListener {
                 }
                 break;
             case "Lever" :
+                System.out.println("command lever");
                 model.leverCrayon();
                 break;
             case "Baisser" :
+                System.out.println("command baisser");
                 model.baisserCrayon();
                 break;
             case "Proc1" :
+                System.out.println("command proc1");
                 model.carre();
                 break;
             case "Proc2" :
+                System.out.println("command proc2");
                 model.poly(60, 8);
                 break;
             case "Proc3" :
+                System.out.println("command proc3");
                 model.spiral(50, 40, 6);
                 break;
+            case "Effacer" :
+                System.out.println("command effacer");
+                view.effacer();
+                break;
             case "Quitter" :
-             //   view.quitter();
+                System.out.println("command quitter");
+                view.quitter();
             default:
                 break;
         }

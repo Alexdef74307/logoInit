@@ -2,6 +2,8 @@ package model;
 
 // package logo;
 
+import model.turtleForm.Arrow;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,24 +26,6 @@ import java.util.Observable;
 
 public class TortueModel extends Observable
 {
-
-	protected class Segment {
-		public Point ptStart, ptEnd;
-		public Color color;
-		
-		public Segment() {
-			ptStart = new Point(0,0);
-			ptEnd = new Point(0,0);
-		}
-		
-		public void drawSegment(Graphics graph) {
-			if (graph==null)
-				return;
-
-			graph.setColor(color);
-			graph.drawLine(ptStart.x, ptStart.y, ptEnd.x, ptEnd.y);
-		}	
-	}
 
 	protected static final int rp=10, rb=5; // Taille de la pointe et de la base de la fleche
 	protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
@@ -76,7 +60,7 @@ public class TortueModel extends Observable
 		y = newY;
 	}
 	
-	public void drawTurtle (Graphics graph) {
+	public void drawTurtle (Graphics graph,Color color) {
 		if (graph==null)
 			return;
 		
@@ -86,34 +70,11 @@ public class TortueModel extends Observable
 			seg.drawSegment(graph);
 		}
 
-		//Calcule les 3 coins du triangle a partir de
-		// la position de la tortue p
-		Point p = new Point(x,y);
-		Polygon arrow = new Polygon();
+		graph.fillPolygon(new Arrow(x,y,dir));
 
-		//Calcule des deux bases
-		//Angle de la droite
-		double theta=ratioDegRad*(-dir);
-		//Demi angle au sommet du triangle
-		double alpha=Math.atan( (float)rb / (float)rp );
-		//Rayon de la fleche
-		double r=Math.sqrt( rp*rp + rb*rb );
-		//Sens de la fleche
 
-		//Pointe
-		Point p2=new Point((int) Math.round(p.x+r*Math.cos(theta)),
-						 (int) Math.round(p.y-r*Math.sin(theta)));
-		arrow.addPoint(p2.x,p2.y);
-		arrow.addPoint((int) Math.round( p2.x-r*Math.cos(theta + alpha) ),
-		  (int) Math.round( p2.y+r*Math.sin(theta + alpha) ));
+		graph.setColor(color);
 
-		//Base2
-		arrow.addPoint((int) Math.round( p2.x-r*Math.cos(theta - alpha) ),
-		  (int) Math.round( p2.y+r*Math.sin(theta - alpha) ));
-
-		arrow.addPoint(p2.x,p2.y);
-		graph.setColor(Color.green);
-		graph.fillPolygon(arrow);
     }
 
 	protected Color decodeColor(int c) {
