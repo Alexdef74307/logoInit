@@ -3,7 +3,7 @@ package view;
 
 // package logo;
 
-import controller.Controller;
+import controller.ControllerManuel;
 import model.TortueModel;
 
 import javax.swing.*;
@@ -35,7 +35,7 @@ public class ModeManuel extends JFrame implements Observer {
 	private TortueModel courante;
 	private FeuilleDessin feuille;
 	private JTextField inputValue;
-	private Controller c;
+	private ControllerManuel c;
 
 
 	/**
@@ -90,7 +90,7 @@ public class ModeManuel extends JFrame implements Observer {
 		feuille.addTortueModel(TortueModel);
 		feuille.addTortueModel(TortueModel);
 		// Création du controller
-		this.c = new Controller(courante,this);
+		this.c = new ControllerManuel(courante,this);
 
 		// Boutons
 		JToolBar toolBar = new JToolBar();

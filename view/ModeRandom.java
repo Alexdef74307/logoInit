@@ -3,7 +3,8 @@ package view;
 
 // package logo;
 
-import controller.Controller;
+import controller.ControllerManuel;
+import controller.ControllerRandom;
 import model.TortueModel;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ public class ModeRandom extends JFrame implements Observer {
     private TortueModel courante;
     private FeuilleDessin feuille;
     private JTextField inputValue;
-    private Controller c;
+    private ControllerRandom c;
 
 
     /**
@@ -74,7 +75,7 @@ public class ModeRandom extends JFrame implements Observer {
         feuille.addTortueModel(TortueModel);
         feuille.addTortueModel(TortueModel);
         // Création du controller
-        this.c = new Controller(courante,this);
+        this.c = new ControllerRandom(courante,this);
 
         // Boutons
         JToolBar toolBar = new JToolBar();
@@ -85,14 +86,7 @@ public class ModeRandom extends JFrame implements Observer {
 
         addButton(toolBar,"Effacer","Nouveau dessin","/icons/index.png");
 
-        toolBar.add(Box.createRigidArea(HGAP));
-        inputValue=new JTextField("45",5);
-        toolBar.add(inputValue);
-        addButton(toolBar, "Avancer", "Avancer 50", null);
-        addButton(toolBar, "Droite", "Droite 45", null);
-        addButton(toolBar, "Gauche", "Gauche 45", null);
-        addButton(toolBar, "Lever", "Lever Crayon", null);
-        addButton(toolBar, "Baisser", "Baisser Crayon", null);
+        addButton(toolBar, "Random", "Random", null);
 
         String[] colorStrings = {"noir", "bleu", "cyan","gris fonce","rouge",
                 "vert", "gris clair", "magenta", "orange",

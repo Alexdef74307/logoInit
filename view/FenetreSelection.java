@@ -42,22 +42,28 @@ public class FenetreSelection extends JDialog {
     }
 
     private void onOK() {
-// add your code here
-    SwingUtilities.invokeLater(new Runnable(){
-        public void run(){
+    // add your code here
+        SwingUtilities.invokeLater(new Runnable(){
+            public void run(){
 
-            ModeManuel fenetre = new ModeManuel();
-            fenetre.setVisible(true);
-            dispose();
-        }
-    });
-
-}
+                ModeManuel fenetre = new ModeManuel();
+                fenetre.setVisible(true);
+                dispose();
+            }
+        });
+    }
 
 
     private void onCancel() {
-// add your code here if necessary
-        dispose();
+    // add your code here if necessary
+        SwingUtilities.invokeLater(new Runnable(){
+            public void run(){
+
+                ModeRandom fenetre = new ModeRandom();
+                fenetre.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {

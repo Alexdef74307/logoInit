@@ -9,11 +9,11 @@ import java.awt.event.ActionListener;
 /**
  * Created by thomas on 11/05/16.
  */
-public class Controller implements ActionListener {
+public class ControllerManuel implements ActionListener {
     private TortueModel model;
     private ModeManuel view;
 
-    public Controller(TortueModel model, ModeManuel view) {
+    public ControllerManuel(TortueModel model, ModeManuel view) {
         this.model = model;
         this.view = view;
     }
