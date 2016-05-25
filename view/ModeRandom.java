@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 public class ModeRandom extends JFrame implements Observer {
     public static final Dimension VGAP = new Dimension(1,5);
@@ -21,6 +22,8 @@ public class ModeRandom extends JFrame implements Observer {
     private FeuilleDessin feuille;
     private JTextField inputValue;
     private ControllerRandom c;
+    public int xMaxFeuilleDessin = 600;
+    public int yMaxFeuilleDessin = 400;
 
 
     /**
@@ -56,27 +59,34 @@ public class ModeRandom extends JFrame implements Observer {
 
     public void logoInit() {
         getContentPane().setLayout(new BorderLayout(10,10));
-
         feuille = new FeuilleDessin(); //500, 400);
         feuille.setBackground(Color.white);
-        feuille.setSize(new Dimension(600,400));
-        feuille.setPreferredSize(new Dimension(600,400));
+        feuille.setSize(new Dimension(xMaxFeuilleDessin,yMaxFeuilleDessin));
+        feuille.setPreferredSize(new Dimension(xMaxFeuilleDessin,yMaxFeuilleDessin));
 
         getContentPane().add(feuille,"Center");
 
-        // Creation de la TortueModel
-        TortueModel TortueModel = new TortueModel();
+        // Definition des Tortues
+        int nbTortue = new Random().nextInt(10)+1;
+        System.out.println(nbTortue);
+        for(int i =0;i<nbTortue;i++){
+            System.out.println("test");
+            // Creation de la TortueModel
+            TortueModel TortueModel = new TortueModel();
+            int xDepart = new Random().nextInt(this.xMaxFeuilleDessin);
+            int yDepart = new Random().nextInt(this.yMaxFeuilleDessin);
+            System.out.println(("x :" + xDepart + ",y :" + yDepart ));
+            // Deplacement de la TortueModel au centre de la feuille
+            TortueModel.setPosition(xDepart,yDepart);
 
-        // Deplacement de la TortueModel au centre de la feuille
-        TortueModel.setPosition(500/2, 400/2);
-
-        courante = TortueModel;
-        courante.addObserver(this);
-        feuille.addTortueModel(TortueModel);
-        feuille.addTortueModel(TortueModel);
-        // Création du controller
-        this.c = new ControllerRandom(courante,this);
-
+            courante = TortueModel;
+            courante.addObserver(this);
+            feuille.addTortueModel(TortueModel);
+            feuille.addTortueModel(TortueModel);
+            // Création du controller
+            this.c = new ControllerRandom(courante,this);
+            c.start();
+        }
         // Boutons
         JToolBar toolBar = new JToolBar();
         JPanel buttonPanel = new JPanel();
@@ -86,7 +96,7 @@ public class ModeRandom extends JFrame implements Observer {
 
         addButton(toolBar,"Effacer","Nouveau dessin","/icons/index.png");
 
-        addButton(toolBar, "Random", "Random", null);
+        //addButton(toolBar, "Random", "Random", null);
 
         String[] colorStrings = {"noir", "bleu", "cyan","gris fonce","rouge",
                 "vert", "gris clair", "magenta", "orange",

@@ -36,8 +36,8 @@ public class ModeManuel extends JFrame implements Observer {
 	private FeuilleDessin feuille;
 	private JTextField inputValue;
 	private ControllerManuel c;
-
-
+	public int xMaxFeuilleDessin = 600;
+	public int yMaxFeuilleDessin = 400;
 	/**
 	 * @param args
 	 */
@@ -74,8 +74,8 @@ public class ModeManuel extends JFrame implements Observer {
 
 		feuille = new FeuilleDessin(); //500, 400);
 		feuille.setBackground(Color.white);
-		feuille.setSize(new Dimension(600,400));
-		feuille.setPreferredSize(new Dimension(600,400));
+		feuille.setSize(new Dimension(xMaxFeuilleDessin,yMaxFeuilleDessin));
+		feuille.setPreferredSize(new Dimension(xMaxFeuilleDessin,yMaxFeuilleDessin));
 
 		getContentPane().add(feuille,"Center");
 

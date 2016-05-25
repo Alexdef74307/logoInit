@@ -28,7 +28,7 @@ public class ControllerManuel implements ActionListener {
                 System.out.println("command avancer");
                 try {
                     int v = Integer.parseInt(view.getInputValue());
-                    model.avancer(v);
+                    model.avancer(v,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
                 } catch (NumberFormatException ex){
                     System.err.println("ce n'est pas un nombre : " + view.getInputValue());
                 }
@@ -61,15 +61,15 @@ public class ControllerManuel implements ActionListener {
                 break;
             case "Proc1" :
                 System.out.println("command proc1");
-                model.carre();
+                model.carre(view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
                 break;
             case "Proc2" :
                 System.out.println("command proc2");
-                model.poly(60, 8);
+                model.poly(60, 8,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
                 break;
             case "Proc3" :
                 System.out.println("command proc3");
-                model.spiral(50, 40, 6);
+                model.spiral(50, 40, 6,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
                 break;
             case "Effacer" :
                 System.out.println("command effacer");

@@ -116,6 +116,48 @@ public class TortueModel extends Observable
 		this.notifyObservers();
 	}
 
+	public void avancer(int dist, int xMaxFeuilleDessin, int yMaxFeuilleDessin) {
+		int newX = (int) Math.round(x+dist*Math.cos(ratioDegRad*dir));
+		int newY = (int) Math.round(y+dist*Math.sin(ratioDegRad*dir));
+
+		if (crayon==true) {
+			Segment seg = new Segment();
+
+			seg.ptStart.x = x;
+			seg.ptStart.y = y;
+			seg.ptEnd.x = newX;
+			seg.ptEnd.y = newY;
+			seg.color = decodeColor(coul);
+
+			listSegments.add(seg);
+		}
+		boolean depasseVal = false;
+		if(newX>xMaxFeuilleDessin){
+			depasseVal = true;
+			newX = newX - xMaxFeuilleDessin;
+		}else if(newX<0){
+			depasseVal = true;
+			newX = newX + xMaxFeuilleDessin;
+		}
+		if(newY>yMaxFeuilleDessin){
+			depasseVal = true;
+			newY = newY - yMaxFeuilleDessin;
+		}else if(newY<0){
+			depasseVal = true;
+			newY = newY + yMaxFeuilleDessin;
+		}
+		x = newX;
+		y = newY;
+		if(depasseVal){
+			System.out.println("1");
+			this.droite(180);
+			this.avancer(dist);
+			this.droite(180);
+			this.avancer(dist);
+		}
+		this.notifyObservers();
+	}
+
 	public void droite(int ang) {
 		dir = (dir + ang) % 360;
 		this.notifyObservers();
@@ -146,26 +188,28 @@ public class TortueModel extends Observable
 		this.notifyObservers();
 	}
 
-	/** quelques classiques */
+	/** quelques classiques
+	 * @param xMaxFeuilleDessin
+	 * @param yMaxFeuilleDessin*/
 
-	public void carre() {
+	public void carre(int xMaxFeuilleDessin, int yMaxFeuilleDessin) {
 		for (int i=0;i<4;i++) {
-			avancer(100);
+			avancer(100,xMaxFeuilleDessin,yMaxFeuilleDessin);
 			droite(90);
 		}
 	}
 
-	public void poly(int n, int a) {
+	public void poly(int n, int a,int xMaxFeuilleDessin, int yMaxFeuilleDessin) {
 		for (int j=0;j<a;j++) {
-			avancer(n);
+			avancer(n,xMaxFeuilleDessin,yMaxFeuilleDessin);
 			droite(360/a);
 		}
 	}
 
-	public void spiral(int n, int k, int a) {
+	public void spiral(int n, int k, int a, int xMaxFeuilleDessin, int yMaxFeuilleDessin) {
 		for (int i = 0; i < k; i++) {
 			couleur(coul+1);
-			avancer(n);
+			avancer(n,xMaxFeuilleDessin,yMaxFeuilleDessin);
 			droite(360/a);
 			n = n+1;
 		}
