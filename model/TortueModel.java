@@ -38,7 +38,7 @@ public class TortueModel extends Observable
 	protected boolean crayon; 
 	protected int coul;
 
-    public int vitesse;
+    public int vitesse = 50;
     public int angleVision = 90;
 	
 	public void setColor(int n) {coul = n;}

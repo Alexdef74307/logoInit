@@ -23,6 +23,7 @@ public class ControllerFlocking extends Thread implements ActionListener {
 
     public ControllerFlocking(TortueModel model, FeuilleModel fm, ModeFlocking view) {
         this.model = model;
+        this.model.vitesse = rand.nextInt(45) + 15;
         this.view = view;
         this.fModel = fm;
         this.sleepTime = 500;
