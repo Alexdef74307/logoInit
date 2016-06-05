@@ -118,7 +118,7 @@ public class TortueModel extends Observable
 		this.notifyObservers();
 	}
 
-	public void champDeVision(int dist, int champVisible) {
+	public double[][] champDeVision(int dist, int champVisible) {
 
 		System.out.println("Angle du champ de vision \n ----------------------------------------------------------");
 		System.out.println(dir+champVisible/2);
@@ -130,9 +130,14 @@ public class TortueModel extends Observable
 		int newY1 = (int) Math.round(y + dist * Math.sin(ratioDegRad * (dir + champVisible / 2)));
 		int newY2 = (int) Math.round(y + dist * Math.sin(ratioDegRad * (dir - champVisible / 2)));
 
+        double coeffDir1 = Double.MAX_VALUE;
+        double coeffDir2 = Double.MAX_VALUE;
+        double ordOrigine1 = Double.MAX_VALUE;
+        double ordOrigine2 = Double.MAX_VALUE;
+
 		if (newX1 == x && newX2 != x ) {
-			double coeffDir2 = (newY2 - y) / (newX2 - x);
-			double ordOrigine2 = y - coeffDir2 * x;
+			coeffDir2 = (newY2 - y) / (newX2 - x);
+			ordOrigine2 = y - coeffDir2 * x;
 
 			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
 			System.out.println("Equation de la droite1 : x = " + x);
@@ -140,8 +145,8 @@ public class TortueModel extends Observable
 			System.out.println("----------------------------------------------------------");
 		}
 		else if (newX1 != x && newX2 == x ) {
-			double coeffDir1 = (newY1 - y) / (newX1 - x);
-			double ordOrigine1 = y - coeffDir1 * x;
+			coeffDir1 = (newY1 - y) / (newX1 - x);
+			ordOrigine1 = y - coeffDir1 * x;
 
 			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
 			System.out.println("Equation de la droite1 : " + coeffDir1 + "x + " + ordOrigine1);
@@ -153,24 +158,35 @@ public class TortueModel extends Observable
 		}
 		else {
 
-			double coeffDir1 = (newY1 - y) / (newX1 - x);
-			double coeffDir2 = (newY2 - y) / (newX2 - x);
+			coeffDir1 = (newY1 - y) / (newX1 - x);
+			coeffDir2 = (newY2 - y) / (newX2 - x);
 
-			double ordOrigine1 = y - coeffDir1 * x;
-			double ordOrigine2 = y - coeffDir2 * x;
+			ordOrigine1 = y - coeffDir1 * x;
+			ordOrigine2 = y - coeffDir2 * x;
 
 			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
 			System.out.println("Equation de la droite1 : " + coeffDir1 + "x + " + ordOrigine1);
 			System.out.println("Equation de la droite2 : " + coeffDir2 + "x + " + ordOrigine2);
 			System.out.println("----------------------------------------------------------");
 		}
+
+        double[][] droites = new double[][] {
+                {coeffDir1, ordOrigine1},
+                {coeffDir2, ordOrigine2}
+        };
+
+        return droites;
 	}
+
+    public boolean EstDansLeChampDeVision(int xTest, int yTest, int distanceMaxVision) {
+        return false;
+    }
 
 	public void avancer(int dist, int xMaxFeuilleDessin, int yMaxFeuilleDessin) {
 		int newX = (int) Math.round(x+dist*Math.cos(ratioDegRad*dir));
 		int newY = (int) Math.round(y+dist*Math.sin(ratioDegRad*dir));
 
-		champDeVision(dist, 90);
+        double[][] droites = champDeVision(dist, 90);
 
 		if (crayon==true) {
 			Segment seg = new Segment();
