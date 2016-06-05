@@ -73,12 +73,10 @@ public class ModeFlocking extends JFrame implements Observer {
         int nbTortue = new Random().nextInt(15)+5;
         System.out.println(nbTortue);
         for(int i =0;i<nbTortue;i++){
-            System.out.println("test");
             // Creation de la TortueModel
             TortueModel TortueModel = new TortueModel();
             int xDepart = new Random().nextInt(this.xMaxFeuilleDessin);
             int yDepart = new Random().nextInt(this.yMaxFeuilleDessin);
-            System.out.println(("x :" + xDepart + ",y :" + yDepart ));
             // Deplacement de la TortueModel au centre de la feuille
             TortueModel.setPosition(xDepart,yDepart);
 
@@ -87,7 +85,7 @@ public class ModeFlocking extends JFrame implements Observer {
             feuilleModel.addTortueModel(TortueModel);
             feuilleModel.addTortueModel(TortueModel);
             // Création du controller
-            this.c = new ControllerFlocking(courante,this);
+            this.c = new ControllerFlocking(courante,feuilleModel,this);
             c.start();
         }
         // Boutons

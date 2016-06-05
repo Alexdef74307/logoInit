@@ -1,5 +1,6 @@
 package controller;
 
+import model.FeuilleModel;
 import model.TortueModel;
 import view.ModeFlocking;
 import view.ModeRandom;
@@ -18,11 +19,13 @@ public class ControllerFlocking extends Thread implements ActionListener {
     private ModeFlocking view;
     private boolean running = true;
     private Random rand = new Random();
+    private FeuilleModel fModel;
 
-    public ControllerFlocking(TortueModel model, ModeFlocking view) {
+    public ControllerFlocking(TortueModel model, FeuilleModel fm, ModeFlocking view) {
         this.model = model;
         this.view = view;
-        this.sleepTime = rand.nextInt(250)+500;
+        this.fModel = fm;
+        this.sleepTime = 500;
     }
 
     @Override
@@ -42,20 +45,21 @@ public class ControllerFlocking extends Thread implements ActionListener {
     public void run(){
         model.leverCrayon();
         while(running){
-            int choix = new Random().nextInt(2);
-            switch (choix){
-                case 0:
-                    model.gauche(rand.nextInt(180)+1);
-                    model.avancer(rand.nextInt(45)+15,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
-                    break;
-                case 1:
-                    model.droite(rand.nextInt(180)+1);
-                    model.avancer(rand.nextInt(45)+15,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
-                    break;
-                default:
-                    System.out.println("What are you doing guys ?");
-                    break;
-            }
+//            int choix = new Random().nextInt(2);
+//            switch (choix){
+//                case 0:
+//                    model.gauche(rand.nextInt(180)+1);
+//                    model.avancer(rand.nextInt(45)+15,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
+//                    break;
+//                case 1:
+//                    model.droite(rand.nextInt(180)+1);
+//                    model.avancer(rand.nextInt(45)+15,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
+//                    break;
+//                default:
+//                    System.out.println("What are you doing guys ?");
+//                    break;
+//            }
+            model.avancer(fModel.estDansChampVision(model, model.vitesse, model.angleVision), view.xMaxFeuilleDessin, view.yMaxFeuilleDessin);
             try {
                 sleep(sleepTime);
             } catch (InterruptedException e) {

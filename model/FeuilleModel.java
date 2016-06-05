@@ -26,6 +26,27 @@ public class FeuilleModel {
         }
     }
 
+    public ArrayList<TortueModel> estDansChampVision(TortueModel tm, int dist, int angleVision) {
+        double [][] champVision = tm.champDeVision(dist, angleVision);
+        ArrayList<TortueModel> visibles = new ArrayList<>();
+        System.out.println("Accessed here    " + champVision[0][0] + champVision[0][1] + champVision[1][0] + champVision[1][1]);
+        for (TortueModel temp : tortueModels) {
+            if (temp != tm) {
 
+                if (champVision[0][0] >= 0) {
+                    if (temp.x <= (champVision[0][0]*temp.x + champVision[0][1]) && (temp.x >= champVision[1][0]*temp.x + champVision[1][1])) {
+                        visibles.add(temp);
+                    }
+                }
+                else if (champVision[0][0] < 0) {
+                    if (temp.x <= (champVision[1][0]*temp.x + champVision[1][1]) && (temp.x >= champVision[0][0]*temp.x + champVision[0][1])) {
+                        visibles.add(temp);
+                    }
+                }
+            }
+        }
+        System.out.println("Nombres de tortues visibles : " + visibles.size());
+        return visibles;
+    }
 
 }

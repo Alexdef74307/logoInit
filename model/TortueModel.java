@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.Random;
 
 
 /*************************************************************************
@@ -36,6 +37,9 @@ public class TortueModel extends Observable
 	protected int dir;	
 	protected boolean crayon; 
 	protected int coul;
+
+    public int vitesse;
+    public int angleVision = 90;
 	
 	public void setColor(int n) {coul = n;}
 	public int getColor() {return coul;}
@@ -120,10 +124,10 @@ public class TortueModel extends Observable
 
 	public double[][] champDeVision(int dist, int champVisible) {
 
-		System.out.println("Angle du champ de vision \n ----------------------------------------------------------");
-		System.out.println(dir+champVisible/2);
-		System.out.println(dir-champVisible/2);
-		System.out.println("----------------------------------------------------------");
+//		System.out.println("Angle du champ de vision \n ----------------------------------------------------------");
+//		System.out.println(dir+champVisible/2);
+//		System.out.println(dir-champVisible/2);
+//		System.out.println("----------------------------------------------------------");
 
 		int newX1 = (int) Math.round(x+dist*Math.cos(ratioDegRad*(dir+champVisible/2)));
 		int newX2 = (int) Math.round(x+dist*Math.cos(ratioDegRad*(dir-champVisible/2)));
@@ -139,19 +143,19 @@ public class TortueModel extends Observable
 			coeffDir2 = (newY2 - y) / (newX2 - x);
 			ordOrigine2 = y - coeffDir2 * x;
 
-			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
-			System.out.println("Equation de la droite1 : x = " + x);
-			System.out.println("Equation de la droite2 : " + coeffDir2 + "x + " + ordOrigine2);
-			System.out.println("----------------------------------------------------------");
+//			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
+//			System.out.println("Equation de la droite1 : x = " + x);
+//			System.out.println("Equation de la droite2 : " + coeffDir2 + "x + " + ordOrigine2);
+//			System.out.println("----------------------------------------------------------");
 		}
 		else if (newX1 != x && newX2 == x ) {
 			coeffDir1 = (newY1 - y) / (newX1 - x);
 			ordOrigine1 = y - coeffDir1 * x;
 
-			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
-			System.out.println("Equation de la droite1 : " + coeffDir1 + "x + " + ordOrigine1);
-			System.out.println("Equation de la droite2 : x = " + x);
-			System.out.println("----------------------------------------------------------");
+//			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
+//			System.out.println("Equation de la droite1 : " + coeffDir1 + "x + " + ordOrigine1);
+//			System.out.println("Equation de la droite2 : x = " + x);
+//			System.out.println("----------------------------------------------------------");
 		}
 		else if (newX1 == x && newX2 == x ) {
 
@@ -164,10 +168,10 @@ public class TortueModel extends Observable
 			ordOrigine1 = y - coeffDir1 * x;
 			ordOrigine2 = y - coeffDir2 * x;
 
-			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
-			System.out.println("Equation de la droite1 : " + coeffDir1 + "x + " + ordOrigine1);
-			System.out.println("Equation de la droite2 : " + coeffDir2 + "x + " + ordOrigine2);
-			System.out.println("----------------------------------------------------------");
+//			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
+//			System.out.println("Equation de la droite1 : " + coeffDir1 + "x + " + ordOrigine1);
+//			System.out.println("Equation de la droite2 : " + coeffDir2 + "x + " + ordOrigine2);
+//			System.out.println("----------------------------------------------------------");
 		}
 
         double[][] droites = new double[][] {
@@ -178,15 +182,31 @@ public class TortueModel extends Observable
         return droites;
 	}
 
-    public boolean EstDansLeChampDeVision(int xTest, int yTest, int distanceMaxVision) {
-        return false;
+    public void avancer(ArrayList<TortueModel> visibles, int xMaxFeuilleDessin, int yMaxFeuilleDessin) {
+        if (visibles.size() != 0) {
+            int vitesseMoyenne = 0;
+            int dirMoyenne = 0;
+
+            for (TortueModel temp : visibles) {
+                vitesseMoyenne += temp.vitesse;
+                dirMoyenne += temp.dir;
+            }
+
+            vitesseMoyenne = vitesseMoyenne / visibles.size();
+            dirMoyenne = dirMoyenne / visibles.size();
+            this.dir = dirMoyenne;
+
+            this.avancer(vitesseMoyenne, xMaxFeuilleDessin, yMaxFeuilleDessin);
+        }
+        else {
+            Random rand = new Random();
+            avancer(rand.nextInt(45) + 15, xMaxFeuilleDessin, yMaxFeuilleDessin);
+        }
     }
 
 	public void avancer(int dist, int xMaxFeuilleDessin, int yMaxFeuilleDessin) {
 		int newX = (int) Math.round(x+dist*Math.cos(ratioDegRad*dir));
 		int newY = (int) Math.round(y+dist*Math.sin(ratioDegRad*dir));
-
-        double[][] droites = champDeVision(dist, 90);
 
 		if (crayon==true) {
 			Segment seg = new Segment();
