@@ -31,7 +31,6 @@ public class ControllerRandom extends Thread implements ActionListener {
         switch(c){
             case "Random":
                 this.start();
-                System.out.println("rand");
                 break;
             default:
                 break;

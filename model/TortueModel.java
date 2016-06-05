@@ -58,6 +58,7 @@ public class TortueModel extends Observable
 	public void setPosition(int newX, int newY) {
 		x = newX;
 		y = newY;
+		this.notifyObservers();
 	}
 	
 	public void drawTurtle (Graphics graph,Color color) {
@@ -149,7 +150,6 @@ public class TortueModel extends Observable
 		x = newX;
 		y = newY;
 		if(depasseVal){
-			System.out.println("1");
 			this.droite(180);
 			this.avancer(dist);
 			this.droite(180);
@@ -216,7 +216,6 @@ public class TortueModel extends Observable
 	}
 
 	public void notifyObservers(){
-		System.out.println("notified");
 		this.setChanged();
 		super.notifyObservers();
 	}

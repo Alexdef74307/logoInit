@@ -21,7 +21,6 @@ public class ControllerManuel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String c = actionEvent.getActionCommand();
-        System.out.println("test");
         switch(c){
 
             case "Avancer" :
