@@ -4,6 +4,7 @@ package view;
 // package logo;
 
 import controller.ControllerManuel;
+import model.FeuilleModel;
 import model.TortueModel;
 
 import javax.swing.*;
@@ -34,6 +35,7 @@ public class ModeManuel extends JFrame implements Observer {
 
 	private TortueModel courante;
 	private FeuilleDessin feuille;
+	private FeuilleModel feuilleModel;
 	private JTextField inputValue;
 	private ControllerManuel c;
 	public int xMaxFeuilleDessin = 600;
@@ -72,7 +74,8 @@ public class ModeManuel extends JFrame implements Observer {
 	public void logoInit() {
 		getContentPane().setLayout(new BorderLayout(10,10));
 
-		feuille = new FeuilleDessin(); //500, 400);
+		feuilleModel = new FeuilleModel();
+		feuille = new FeuilleDessin(feuilleModel); //500, 400);
 		feuille.setBackground(Color.white);
 		feuille.setSize(new Dimension(xMaxFeuilleDessin,yMaxFeuilleDessin));
 		feuille.setPreferredSize(new Dimension(xMaxFeuilleDessin,yMaxFeuilleDessin));
@@ -87,8 +90,8 @@ public class ModeManuel extends JFrame implements Observer {
 
 		courante = TortueModel;
 		courante.addObserver(this);
-		feuille.addTortueModel(TortueModel);
-		feuille.addTortueModel(TortueModel);
+		feuilleModel.addTortueModel(TortueModel);
+		feuilleModel.addTortueModel(TortueModel);
 		// Création du controller
 		this.c = new ControllerManuel(courante,this);
 
@@ -183,7 +186,7 @@ public class ModeManuel extends JFrame implements Observer {
 
 	// efface tout et reinitialise la feuille
 	public void effacer() {
-		feuille.reset();
+		feuilleModel.reset();
 		feuille.repaint();
 
 		// Replace la TortueModel au centre

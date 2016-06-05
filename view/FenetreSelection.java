@@ -7,6 +7,7 @@ public class FenetreSelection extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private JButton modeFlockingButton;
 
     public FenetreSelection() {
         setContentPane(contentPane);
@@ -39,6 +40,15 @@ public class FenetreSelection extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        modeFlockingButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                super.mouseClicked(mouseEvent);
+                ModeFlocking fenetre = new ModeFlocking();
+                fenetre.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     private void onOK() {

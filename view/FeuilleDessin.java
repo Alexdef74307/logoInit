@@ -2,6 +2,7 @@ package view;
 
 // package logo;
 
+import model.FeuilleModel;
 import model.TortueModel;
 
 import javax.swing.*;
@@ -21,22 +22,15 @@ import java.util.Observer;
  */
 
 public class FeuilleDessin extends JPanel {
-	private ArrayList<TortueModel> TortueModels; // la liste des TortueModels enregistrees
-	
-	public FeuilleDessin() {
-		TortueModels = new ArrayList<TortueModel>();
+	private FeuilleModel feuilleModel;
+
+	public FeuilleDessin(FeuilleModel feuilleModel) {
+		this.feuilleModel = feuilleModel;
 	}
 
-	public void addTortueModel(TortueModel o) {
-		TortueModels.add(o);
-	}
 
-	public void reset() {
-		for (Iterator it = TortueModels.iterator();it.hasNext();) {
-			TortueModel t = (TortueModel) it.next();
-			t.reset();
-		}
-	}
+
+
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -52,7 +46,8 @@ public class FeuilleDessin extends JPanel {
 	}
 	
 	public void showTurtles(Graphics g) {
-		for(Iterator it = TortueModels.iterator();it.hasNext();) {
+
+		for(Iterator it = feuilleModel.tortueModels.iterator();it.hasNext();) {
 			TortueModel t = (TortueModel) it.next();
 			t.drawTurtle(g,Color.GREEN);
 		}

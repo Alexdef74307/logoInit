@@ -3,7 +3,7 @@ package view;
 
 // package logo;
 
-import controller.ControllerManuel;
+import controller.ControllerFlocking;
 import controller.ControllerRandom;
 import model.FeuilleModel;
 import model.TortueModel;
@@ -15,7 +15,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-public class ModeRandom extends JFrame implements Observer {
+public class ModeFlocking extends JFrame implements Observer {
     public static final Dimension VGAP = new Dimension(1,5);
     public static final Dimension HGAP = new Dimension(5,1);
 
@@ -23,7 +23,7 @@ public class ModeRandom extends JFrame implements Observer {
     private FeuilleModel feuilleModel;
     private FeuilleDessin feuille;
     private JTextField inputValue;
-    private ControllerRandom c;
+    private ControllerFlocking c;
     public int xMaxFeuilleDessin = 600;
     public int yMaxFeuilleDessin = 400;
 
@@ -46,7 +46,7 @@ public class ModeRandom extends JFrame implements Observer {
         System.exit(0);
     }
 
-    public ModeRandom() {
+    public ModeFlocking() {
         super("un logo tout simple");
         logoInit();
 
@@ -87,7 +87,7 @@ public class ModeRandom extends JFrame implements Observer {
             feuilleModel.addTortueModel(TortueModel);
             feuilleModel.addTortueModel(TortueModel);
             // Création du controller
-            this.c = new ControllerRandom(courante,this);
+            this.c = new ControllerFlocking(courante,this);
             c.start();
         }
         // Boutons
