@@ -29,7 +29,7 @@ public class FeuilleModel {
     public ArrayList<TortueModel> estDansChampVision(TortueModel tm, int dist, int angleVision) {
         double [][] champVision = tm.champDeVision(dist, angleVision);
         ArrayList<TortueModel> visibles = new ArrayList<>();
-        System.out.println("Accessed here    " + champVision[0][0] + champVision[0][1] + champVision[1][0] + champVision[1][1]);
+        System.out.println("Accessed here    " + champVision[0][0] + "  " + champVision[0][1] + "  " + champVision[1][0] + "  " + champVision[1][1]);
         for (TortueModel temp : tortueModels) {
             if (temp != tm) {
 

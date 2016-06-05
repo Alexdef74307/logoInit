@@ -34,7 +34,7 @@ public class TortueModel extends Observable
 	protected ArrayList<Segment> listSegments; // Trace de la tortue
 	
 	protected int x, y;	
-	protected int dir;	
+	public int dir;
 	protected boolean crayon; 
 	protected int coul;
 
