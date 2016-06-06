@@ -123,12 +123,6 @@ public class TortueModel extends Observable
 	}
 
 	public double[][] champDeVision(int dist, int champVisible) {
-
-//		System.out.println("Angle du champ de vision \n ----------------------------------------------------------");
-//		System.out.println(dir+champVisible/2);
-//		System.out.println(dir-champVisible/2);
-//		System.out.println("----------------------------------------------------------");
-
 		int newX1 = (int) Math.round(x+dist*Math.cos(ratioDegRad*(dir+champVisible/2)));
 		int newX2 = (int) Math.round(x+dist*Math.cos(ratioDegRad*(dir-champVisible/2)));
 		int newY1 = (int) Math.round(y + dist * Math.sin(ratioDegRad * (dir + champVisible / 2)));
@@ -142,43 +136,24 @@ public class TortueModel extends Observable
 		if (newX1 == x && newX2 != x ) {
 			coeffDir2 = (newY2 - y) / (newX2 - x);
 			ordOrigine2 = y - coeffDir2 * x;
-
-//			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
-//			System.out.println("Equation de la droite1 : x = " + x);
-//			System.out.println("Equation de la droite2 : " + coeffDir2 + "x + " + ordOrigine2);
-//			System.out.println("----------------------------------------------------------");
 		}
 		else if (newX1 != x && newX2 == x ) {
 			coeffDir1 = (newY1 - y) / (newX1 - x);
 			ordOrigine1 = y - coeffDir1 * x;
-
-//			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
-//			System.out.println("Equation de la droite1 : " + coeffDir1 + "x + " + ordOrigine1);
-//			System.out.println("Equation de la droite2 : x = " + x);
-//			System.out.println("----------------------------------------------------------");
 		}
 		else if (newX1 == x && newX2 == x ) {
 
 		}
 		else {
-
 			coeffDir1 = (newY1 - y) / (newX1 - x);
 			coeffDir2 = (newY2 - y) / (newX2 - x);
-
 			ordOrigine1 = y - coeffDir1 * x;
 			ordOrigine2 = y - coeffDir2 * x;
-
-//			System.out.println("Equation des droites du champ de vision \n ----------------------------------------------------------");
-//			System.out.println("Equation de la droite1 : " + coeffDir1 + "x + " + ordOrigine1);
-//			System.out.println("Equation de la droite2 : " + coeffDir2 + "x + " + ordOrigine2);
-//			System.out.println("----------------------------------------------------------");
 		}
-
         double[][] droites = new double[][] {
                 {coeffDir1, ordOrigine1},
                 {coeffDir2, ordOrigine2}
         };
-
         return droites;
 	}
 
@@ -200,6 +175,7 @@ public class TortueModel extends Observable
         }
         else {
             Random rand = new Random();
+			this.dir = rand.nextInt(180) + 1;
             avancer(rand.nextInt(45) + 15, xMaxFeuilleDessin, yMaxFeuilleDessin);
         }
     }

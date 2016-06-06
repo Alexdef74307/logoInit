@@ -47,20 +47,6 @@ public class ControllerFlocking extends Thread implements ActionListener {
     public void run(){
         model.leverCrayon();
         while(running){
-//            int choix = new Random().nextInt(2);
-//            switch (choix){
-//                case 0:
-//                    model.gauche(rand.nextInt(180)+1);
-//                    model.avancer(rand.nextInt(45)+15,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
-//                    break;
-//                case 1:
-//                    model.droite(rand.nextInt(180)+1);
-//                    model.avancer(rand.nextInt(45)+15,view.xMaxFeuilleDessin,view.yMaxFeuilleDessin);
-//                    break;
-//                default:
-//                    System.out.println("What are you doing guys ?");
-//                    break;
-//            }
             model.avancer(fModel.estDansChampVision(model, model.vitesse, model.angleVision), view.xMaxFeuilleDessin, view.yMaxFeuilleDessin);
             try {
                 sleep(sleepTime);
