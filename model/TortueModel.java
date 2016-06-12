@@ -32,13 +32,38 @@ public class TortueModel extends Observable
 	protected static final double ratioDegRad = 0.0174533; // Rapport radians/degres (pour la conversion)
 	
 	protected ArrayList<Segment> listSegments; // Trace de la tortue
-	
-	protected int x, y;	
-	public int dir;
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	private int x, y;
+
+	public int getDir() {
+		return dir;
+	}
+
+	public int getVitesse() {
+		return vitesse;
+	}
+
+	public void setDir(int dir) {
+		this.dir = dir;
+	}
+
+	public void setVitesse(int vitesse) {
+		this.vitesse = vitesse;
+	}
+
+	private int dir;
 	protected boolean crayon; 
 	protected int coul;
 
-    public int vitesse = 50;
+    private int vitesse = 50;
     public int angleVision = 90;
 	
 	public void setColor(int n) {coul = n;}

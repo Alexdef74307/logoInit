@@ -23,8 +23,8 @@ public class ControllerFlocking extends Thread implements ActionListener {
 
     public ControllerFlocking(TortueModel model, FeuilleModel fm, ModeFlocking view) {
         this.model = model;
-        this.model.vitesse = rand.nextInt(45) + 15;
-        this.model.dir = 1;
+        this.model.setVitesse(rand.nextInt(45) + 15);
+        this.model.setDir(1);
         this.view = view;
         this.fModel = fm;
         this.sleepTime = 500;
@@ -45,9 +45,9 @@ public class ControllerFlocking extends Thread implements ActionListener {
     }
 
     public void run(){
-        model.leverCrayon();
+      //  model.leverCrayon();
         while(running){
-            model.avancer(fModel.estDansChampVision(model, model.vitesse, model.angleVision), view.xMaxFeuilleDessin, view.yMaxFeuilleDessin);
+            model.avancer(fModel.estDansChampVision(model, model.getVitesse(), model.angleVision), view.xMaxFeuilleDessin, view.yMaxFeuilleDessin);
             try {
                 sleep(sleepTime);
             } catch (InterruptedException e) {

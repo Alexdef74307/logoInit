@@ -33,12 +33,12 @@ public class FeuilleModel {
             if (temp != tm) {
 
                 if (champVision[0][0] >= 0) {
-                    if (temp.x <= (champVision[0][0]*temp.x + champVision[0][1]) && (temp.x >= champVision[1][0]*temp.x + champVision[1][1])) {
+                    if (temp.getX() <= (champVision[0][0]* temp.getX() + champVision[0][1]) && (temp.getX() >= champVision[1][0]* temp.getX() + champVision[1][1])) {
                         visibles.add(temp);
                     }
                 }
                 else if (champVision[0][0] < 0) {
-                    if (temp.x <= (champVision[1][0]*temp.x + champVision[1][1]) && (temp.x >= champVision[0][0]*temp.x + champVision[0][1])) {
+                    if (temp.getX() <= (champVision[1][0]* temp.getX() + champVision[1][1]) && (temp.getX() >= champVision[0][0]* temp.getX() + champVision[0][1])) {
                         visibles.add(temp);
                     }
                 }
